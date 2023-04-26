@@ -1,8 +1,21 @@
 version: '2.1'
 services:
+  ipv6nat-mailcow:
+    image: bash:latest
+    restart: "no"
+    entrypoint: ["echo", "ipv6nat disabled in compose.override.yml"]
+
   dovecot-mailcow:
     image: mailcow/dovecot:1.23-xaps
     build: ./data/Dockerfiles/dovecot
+    networks:
+      mailcow-network:
+        ipv6_address: fd4d:6169:6c63:6f77::fa
+
+  postfix-mailcow:
+    networks:
+      mailcow-network:
+        ipv6_address: fd4d:6169:6c63:6f77::fd
 
   xapsd-mailcow:
     build: ./data/Dockerfiles/xapsd
