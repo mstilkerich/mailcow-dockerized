@@ -1,0 +1,45 @@
+# set the loglevel to either
+# trace, debug, error, fatal, info, panic or warn
+# Default: info
+loglevel: info
+
+# xapsd creates a json file to store the registration persistent on disk.
+# This sets the location of the file.
+databaseFile: /var/lib/xapsd/database.json
+
+# xapsd listens on a socket for http/https requests from the dovecot plugin.
+# This sets the address and port number of the listen socket.
+#listenAddr:
+port: 11619
+
+# xapsd is able to listen on a HTTPS Socket to allow HTTP/2 to be used
+# SSL is enabled implicitly when certfile and keyfile exist
+# !!! only use HTTPS for connection pooling with a proxy e.g. nginx or HaProxy
+# !!! direct usage with the plugin is discouraged and unsupported
+#tlsCertfile:
+#tlsKeyfile:
+#tlsListenAddr:
+#tlsPort: 11620
+
+# Notifications that are not initiated by new messages are not sent immediately for two reasons:
+# 1. When you move/copy/delete messages you most likely move/copy/delete more messages within a short period of time.
+# 2. You don't need your mailboxes to synchronize immediately since they are automatically synchronized when opening
+#    the app
+# If a new message comes and the move/copy/delete notification is still on hold it will be sent with the notification
+# for the new message.
+# This sets the interval to check for delayed messages.
+checkInterval: 20
+
+# Set the time how long notifications for not-new messages should be delayed until they are sent.
+# Whenever checkInterval runs, it checks if "delay" <= "waiting time" and sends the notification if the expression is
+# true.
+delay: 30
+
+# To retrieve certificates from Apple, we need to login with a valid Apple ID
+# The accounts email must be given in cleartext, but the password has to
+# be hashed before sending it. To not leak working credentials on running servers,
+# we do not accept the cleartext password here.
+appleId: apple@apple.com
+
+# use `xaps -pass` to calculate the hash of the apple id password
+appleIdHashedPassword: thehash

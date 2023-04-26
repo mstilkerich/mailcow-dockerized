@@ -108,6 +108,22 @@ RUN groupadd -g 5000 vmail \
   dovecot-imapd \
   dovecot-solr \
   && pip3 install mysql-connector-python html2text jinja2 redis \
+  \
+  && apt-get -y --no-install-recommends install dovecot-dev git cmake \
+  && mkdir dovecot-xaps-plugin \
+  && cd dovecot-xaps-plugin \
+  && git init . \
+  && git remote add origin https://github.com/freswa/dovecot-xaps-plugin.git \
+  && git fetch --depth 1 origin master \
+  && git checkout FETCH_HEAD \
+  && mkdir build \
+  && cd build  \
+  && cmake .. -DCMAKE_BUILD_TYPE=Release \
+  && make install \
+  && cd ../.. \
+  && rm -r dovecot-xaps-plugin \
+  && apt-get purge --auto-remove -y cmake git dovecot-dev \
+  \
   && apt-get autoremove --purge -y \
   && apt-get autoclean \
   && rm -rf /var/lib/apt/lists/* \
