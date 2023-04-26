@@ -1,0 +1,22 @@
+version: '2.1'
+services:
+  dovecot-mailcow:
+    image: mailcow/dovecot:1.23-xaps
+    build: ./data/Dockerfiles/dovecot
+
+  xapsd-mailcow:
+    build: ./data/Dockerfiles/xapsd
+    image: xapsd-docker
+    volumes:
+      - ./data/conf/xapsd/xapsd.yaml:/etc/xapsd/xapsd.yaml:ro,Z
+      - xapsd-vol-1:/var/lib/xapsd
+    restart: always
+    environment:
+      - TZ=${TZ}
+    networks:
+      mailcow-network:
+        aliases:
+          - xapsd
+
+volumes:
+  xapsd-vol-1:
